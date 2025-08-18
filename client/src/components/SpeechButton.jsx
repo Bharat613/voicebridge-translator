@@ -1,9 +1,13 @@
 import React from "react";
+import { languages } from "./LanguageSelector"; // import the list with speechCode
 
 const SpeechButton = ({ sourceLang, onResult }) => {
   const handleListen = () => {
     const recognition = new window.webkitSpeechRecognition();
-    recognition.lang = sourceLang;
+
+    const langObj = languages.find((l) => l.code === sourceLang);
+    recognition.lang = langObj ? langObj.speechCode : sourceLang;
+
     recognition.interimResults = false;
 
     recognition.onresult = (event) => {
@@ -18,7 +22,7 @@ const SpeechButton = ({ sourceLang, onResult }) => {
     recognition.start();
   };
 
-  return <button onClick={handleListen}>Start Listening</button>;
+  return <button onClick={handleListen}>🎤 Start Listening</button>;
 };
 
 export default SpeechButton;
