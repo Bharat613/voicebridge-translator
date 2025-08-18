@@ -3,7 +3,7 @@ import LanguageSelector from "./components/LanguageSelector";
 import SpeechButton from "./components/SpeechButton";
 import Translator from "./components/Translator";
 import './styles.css'
-
+import SplashScreen from "./components/SplashScreen";
 function App() {
   const [sourceLang, setSourceLang] = useState("en");
   const [targetLang, setTargetLang] = useState("hi");
@@ -37,6 +37,7 @@ function App() {
 
   return (
     <div>
+      <SplashScreen/>
       <h1>VoiceBridge</h1>
       <p style={{fontWeight:"bold"}}>Real-Time Language Translator</p>
 
