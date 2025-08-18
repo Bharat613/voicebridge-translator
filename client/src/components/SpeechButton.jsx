@@ -1,5 +1,5 @@
 import React from "react";
-import { languages } from "./LanguageSelector"; // import the list with speechCode
+import { languages } from "./LanguageSelector"; 
 
 const SpeechButton = ({ sourceLang, onResult }) => {
   const handleListen = () => {
@@ -22,7 +22,7 @@ const SpeechButton = ({ sourceLang, onResult }) => {
     recognition.start();
   };
 
-  return <button onClick={handleListen}>🎤 Start Listening</button>;
+  return <button onClick={handleListen}>Start Listening</button>;
 };
 
 export default SpeechButton;
