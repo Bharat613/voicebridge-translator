@@ -1,36 +1,61 @@
-# Node.js / Server
+# Node.js dependencies
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
-.env
-dist/
-coverage/
+pnpm-debug.log*
 
-# React / Client
-client/node_modules/
-client/build/
-client/dist/
+# Environment variables
+.env
+.env.local
+.env.*.local
+server/.env
+server/.env.local
+server/.env.*.local
 client/.env
-client/.DS_Store
+client/.env.local
+client/.env.*.local
+
+# Build output
+dist/
+build/
+.cache/
+.next/
+out/
 
 # Logs
-*.log
 logs
-*.pid
-*.seed
-*.pid.lock
+*.log
+*.log.*
 
-# IDE / Editors
+# IDE/editor stuff
 .vscode/
 .idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
 
-# OS files
+# OS generated files
 .DS_Store
 Thumbs.db
+
+# Coverage
+coverage/
+*.lcov
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Client specific (React/Vite)
+client/node_modules/
+client/dist/
+client/.vite/
+
+# Server specific (Express/Node)
+server/node_modules/
+server/dist/
+server/coverage/
