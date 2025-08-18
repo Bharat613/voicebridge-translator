@@ -1,6 +1,6 @@
 {
   "name": "VoiceBridge",
-  "short_name": "RealTime Translator",
+  "short_name": "VoiceBridge",
   "description": "Speak in your language and translate instantly to others.",
   "start_url": ".",
   "display": "standalone",
