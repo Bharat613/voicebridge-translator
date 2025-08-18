@@ -11,23 +11,29 @@ function App() {
   const [translatedText, setTranslatedText] = useState("");
 
   const speakText = async (text, lang) => {
-    if (!text) return;
-    try {
-      const response = await fetch("http://localhost:4000/tts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, lang })
-      });
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const audio = new Audio(url);
-      audio.playbackRate = 1.;
-      audio.volume = 1.0; 
-      audio.play();
-    } catch (err) {
-      console.error("TTS playback error:", err);
+  if (!text) return;
+  try {
+    const API_URL = import.meta.env.VITE_API_URL;   // ✅ get from .env
+    const response = await fetch(`${API_URL}/tts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text, lang })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
     }
-  };
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const audio = new Audio(url);
+    audio.playbackRate = 1.0;
+    audio.volume = 1.0;
+    audio.play();
+  } catch (err) {
+    console.error("TTS playback error:", err);
+  }
+};
 
   return (
     <div>
