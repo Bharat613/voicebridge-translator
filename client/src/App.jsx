@@ -37,6 +37,7 @@ function App() {
 
   return (
     <div>
+      
       <SplashScreen/>
       <h1>VoiceBridge</h1>
       <p style={{fontWeight:"bold"}}>Real-Time Language Translator</p>
