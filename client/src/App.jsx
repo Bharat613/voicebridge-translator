@@ -5,6 +5,9 @@ import Translator from "./components/Translator";
 import './styles.css'
 import SplashScreen from "./components/SplashScreen";
 function App() {
+    const [isSpeaking, setIsSpeaking] = useState(false);
+const [isListening, setIsListening] = useState(false); //when you dont want animation
+
   const [sourceLang, setSourceLang] = useState("en");
   const [targetLang, setTargetLang] = useState("hi");
   const [textToTranslate, setTextToTranslate] = useState("");
@@ -12,6 +15,7 @@ function App() {
 
   const speakText = async (text, lang) => {
   if (!text) return;
+  setIsSpeaking(true);
   try {
     const API_URL = import.meta.env.VITE_API_URL;   // ✅ get from .env
     const response = await fetch(`${API_URL}/tts`, {
@@ -30,14 +34,19 @@ function App() {
     audio.playbackRate = 1.0;
     audio.volume = 1.0;
     audio.play();
+    audio.onended = () => setIsSpeaking(false);
   } catch (err) {
     console.error("TTS playback error:", err);
+    setIsSpeaking(false);
   }
 };
+//below function also created for animation management
+ const handleSpeak = async () => {
+    await speakText(translatedText, targetLang);
+  };
 
   return (
     <div>
-      
       <SplashScreen/>
       <h1>VoiceBridge</h1>
       <p style={{fontWeight:"bold"}}>Real-Time Language Translator</p>
@@ -54,10 +63,16 @@ function App() {
         onChange={(e) => setTargetLang(e.target.value)}
       />
 
-      <SpeechButton
+      {/* <SpeechButton
         sourceLang={sourceLang}
         onResult={(text) => setTextToTranslate(text)}
-      />
+      /> */}
+      <SpeechButton
+  sourceLang={sourceLang}
+  onResult={(text) => setTextToTranslate(text)}
+  isListening={isListening}
+  setIsListening={setIsListening}
+/>
 
       <h3>Recognized Text:</h3>
       <textarea value={textToTranslate} readOnly rows={3} />
@@ -69,9 +84,14 @@ function App() {
         onTranslate={(text) => setTranslatedText(text)}
       />
 
-      <button onClick={() => speakText(translatedText, targetLang)}>
+<button
+        className={`speak-button ${isSpeaking ? "speaking" : ""}`}
+        onClick={handleSpeak}
+      >
         Speak Translation
       </button>
+
+      {/* <button onClick={() => speakText(translatedText, targetLang)}> Speak Translation </button> */}
     </div>
   );
 }

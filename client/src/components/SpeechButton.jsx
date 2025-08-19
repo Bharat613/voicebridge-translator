@@ -1,7 +1,8 @@
 import React from "react";
 import { languages } from "./LanguageSelector"; 
+import '../components/ListeningAnimation.css'
+const SpeechButton = ({ sourceLang, onResult, isListening, setIsListening }) => {
 
-const SpeechButton = ({ sourceLang, onResult }) => {
   const handleListen = () => {
     const recognition = new window.webkitSpeechRecognition();
 
@@ -9,7 +10,13 @@ const SpeechButton = ({ sourceLang, onResult }) => {
     recognition.lang = langObj ? langObj.speechCode : sourceLang;
 
     recognition.interimResults = false;
+ recognition.onstart = () => {
+      setIsListening(true); // start animation
+    };
 
+    recognition.onend = () => {
+      setIsListening(false); // stop animation
+    };
     recognition.onresult = (event) => {
       const spokenText = event.results[0][0].transcript;
       onResult(spokenText);
@@ -17,12 +24,20 @@ const SpeechButton = ({ sourceLang, onResult }) => {
 
     recognition.onerror = (event) => {
       console.error("Speech recognition error:", event.error);
+      setIsListening(false); 
     };
 
     recognition.start();
   };
 
-  return <button onClick={handleListen}>Start Listening</button>;
+  return <button 
+      className={`speak-button ${isListening ? "speaking" : ""}`}
+      onClick={handleListen}
+    >
+      Start Listening
+    </button>;
+
+    // return <button onClick={handleListen}>Start Listening</button>;
 };
 
 export default SpeechButton;
